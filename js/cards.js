@@ -13,8 +13,9 @@ const Cards = (() => {
     us: { name: 'United States',  flag: '🇺🇸', file: 'data/usa.json' },
   };
 
-  let deck = [];       // shuffled array of card objects
-  let drawIndex = 0;   // current position in the deck
+  let itemPool = [];    // flat array of all individual items from selected countries
+  let poolIndex = 0;    // current position in the shuffled item pool
+  let cardCounter = 0;  // used to generate unique card IDs
 
   /** Fisher-Yates shuffle (in-place) */
   function shuffle(arr) {
@@ -26,7 +27,8 @@ const Cards = (() => {
   }
 
   /**
-   * Load and build a deck from the given country codes.
+   * Load and build an item pool from the given country codes.
+   * All items from all selected countries are combined into one shuffled pool.
    * @param {string[]} countryCodes  e.g. ['za', 'uk']
    * @returns {Promise<void>}
    */
@@ -40,24 +42,34 @@ const Cards = (() => {
     });
 
     const results = await Promise.all(fetches);
-    const allCards = results.flat();
+    // Flatten all cards from all countries into individual items
+    const allItems = results.flat().flatMap(card => card.items);
 
-    deck = shuffle(allCards);
-    drawIndex = 0;
+    itemPool = shuffle(allItems);
+    poolIndex = 0;
+    cardCounter = 0;
   }
 
   /**
-   * Draw the next card from the deck.
-   * Reshuffles automatically when the deck is exhausted.
+   * Draw the next card from the pool.
+   * Each card is assembled on-the-fly by picking 5 items from the shuffled pool.
+   * Reshuffles the pool automatically when exhausted.
    * @returns {Object} card object { id, items[] }
    */
   function drawCard() {
-    if (deck.length === 0) return null;
-    if (drawIndex >= deck.length) {
-      shuffle(deck);
-      drawIndex = 0;
+    if (itemPool.length === 0) return null;
+
+    // Reshuffle if we don't have enough items left for a full card
+    if (poolIndex + 5 > itemPool.length) {
+      shuffle(itemPool);
+      poolIndex = 0;
     }
-    return deck[drawIndex++];
+
+    const items = itemPool.slice(poolIndex, poolIndex + 5);
+    poolIndex += 5;
+    cardCounter++;
+
+    return { id: `card-${cardCounter}`, items };
   }
 
   /** Returns display metadata for a country code */
