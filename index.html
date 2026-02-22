@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>Global 30 Seconds</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCREEN: Home / Country Select                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="screen-home" class="screen active">
+    <div class="board-header">
+      <h1 class="game-title">Global<br><span>30 Seconds</span></h1>
+      <p class="subtitle">The International Edition</p>
+    </div>
+
+    <div class="card-panel">
+      <h2 class="panel-label">Select Countries</h2>
+      <p class="panel-hint">Choose one or more to build your deck</p>
+
+      <div class="country-grid">
+        <button class="country-btn" data-country="za" aria-pressed="false">
+          <span class="flag">🇿🇦</span>
+          <span class="country-name">South Africa</span>
+        </button>
+        <button class="country-btn" data-country="uk" aria-pressed="false">
+          <span class="flag">🇬🇧</span>
+          <span class="country-name">United Kingdom</span>
+        </button>
+        <button class="country-btn" data-country="es" aria-pressed="false">
+          <span class="flag">🇪🇸</span>
+          <span class="country-name">Spain</span>
+        </button>
+        <button class="country-btn" data-country="us" aria-pressed="false">
+          <span class="flag">🇺🇸</span>
+          <span class="country-name">United States</span>
+        </button>
+      </div>
+
+      <button id="btn-to-teams" class="btn-primary" disabled>
+        Next: Set Up Teams →
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCREEN: Team Setup                             -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="screen-teams" class="screen">
+    <div class="board-header compact">
+      <h1 class="game-title small">Global <span>30 Seconds</span></h1>
+    </div>
+
+    <div class="card-panel">
+      <h2 class="panel-label">Team Setup</h2>
+      <p class="panel-hint">2 – 6 teams. Edit names to your liking.</p>
+
+      <div id="teams-list" class="teams-list">
+        <!-- injected by JS -->
+      </div>
+
+      <div class="team-controls">
+        <button id="btn-remove-team" class="btn-secondary">− Remove Team</button>
+        <button id="btn-add-team" class="btn-secondary">+ Add Team</button>
+      </div>
+
+      <div class="nav-row">
+        <button id="btn-back-home" class="btn-ghost">← Back</button>
+        <button id="btn-start-game" class="btn-primary">Start Game!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCREEN: Game Board (scoreboard + turn info)    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="screen-board" class="screen">
+    <div class="board-header compact">
+      <h1 class="game-title small">Global <span>30 Seconds</span></h1>
+    </div>
+
+    <div class="scoreboard card-panel">
+      <h2 class="panel-label">Scoreboard</h2>
+      <div id="score-rows" class="score-rows">
+        <!-- injected by JS -->
+      </div>
+      <div class="win-target-note">First to 35 points wins!</div>
+    </div>
+
+    <div class="turn-panel card-panel">
+      <div class="turn-label">It's your turn:</div>
+      <div id="active-team-name" class="active-team-name">Team 1</div>
+      <p class="turn-hint">Pass the phone to your describer, then tap the button!</p>
+      <button id="btn-draw-card" class="btn-primary big">Draw Card</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCREEN: Card (timer + items)                   -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="screen-card" class="screen">
+    <div class="timer-ring-wrapper">
+      <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="ring-bg" cx="60" cy="60" r="54"/>
+        <circle id="ring-fill" class="ring-fill" cx="60" cy="60" r="54"/>
+      </svg>
+      <div id="timer-count" class="timer-count">30</div>
+    </div>
+
+    <div id="card-items" class="card-items">
+      <!-- 5 items injected by JS -->
+    </div>
+
+    <button id="btn-stop-timer" class="btn-ghost stop-btn">Stop Timer Early</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCREEN: Scoring (tick correct answers)         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="screen-scoring" class="screen">
+    <div class="board-header compact">
+      <h1 class="game-title small">Global <span>30 Seconds</span></h1>
+    </div>
+
+    <div class="card-panel">
+      <h2 class="panel-label">Mark Correct Answers</h2>
+      <p id="scoring-team-label" class="panel-hint">Team 1's turn</p>
+
+      <div id="scoring-items" class="scoring-items">
+        <!-- checkboxes injected by JS -->
+      </div>
+
+      <div class="score-tally">
+        Points this round: <span id="tally-count">0</span>
+      </div>
+
+      <button id="btn-confirm-score" class="btn-primary">Confirm & Next Team →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCREEN: Winner                                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="screen-winner" class="screen">
+    <div class="winner-wrap">
+      <div class="winner-trophy">🏆</div>
+      <h1 class="winner-title">We Have a Winner!</h1>
+      <div id="winner-team-name" class="winner-team-name">Team 1</div>
+      <p class="winner-score-line">reached 35 points first!</p>
+
+      <div class="winner-final-scores card-panel">
+        <h2 class="panel-label">Final Scores</h2>
+        <div id="winner-score-rows" class="score-rows">
+          <!-- injected by JS -->
+        </div>
+      </div>
+
+      <button id="btn-play-again" class="btn-primary">Play Again</button>
+    </div>
+  </div>
+
+  <script src="js/cards.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
