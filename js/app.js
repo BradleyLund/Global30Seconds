@@ -249,12 +249,22 @@
       tag.className = 'scoring-country-tag';
       tag.innerHTML = `<span>${meta.flag}</span>${item.country.toUpperCase()}`;
 
+      const learnBtn = document.createElement('a');
+      learnBtn.className = 'learn-btn';
+      learnBtn.textContent = '?';
+      learnBtn.title = `Learn about "${item.text}"`;
+      learnBtn.href = `https://www.google.com/search?q=${encodeURIComponent(item.text)}`;
+      learnBtn.target = '_blank';
+      learnBtn.rel = 'noopener noreferrer';
+
       row.appendChild(box);
       row.appendChild(text);
       row.appendChild(tag);
+      row.appendChild(learnBtn);
       scoringItemsEl.appendChild(row);
 
-      row.addEventListener('click', () => {
+      row.addEventListener('click', (e) => {
+        if (e.target === learnBtn) return;
         row.classList.toggle('checked');
         box.textContent = row.classList.contains('checked') ? '✓' : '';
         updateTally();
