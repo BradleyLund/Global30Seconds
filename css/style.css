@@ -618,6 +618,43 @@ body {
   white-space: nowrap;
 }
 
+.learn-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--dark-green);
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-decoration: none;
+  border: 2px solid var(--brown);
+  box-shadow: 0 2px 0 var(--brown);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.learn-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--brown);
+}
+
+.learn-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.scoring-item.checked .learn-btn {
+  background: rgba(255,255,255,0.25);
+  color: var(--gold-light);
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+}
+
 .score-tally {
   text-align: center;
   font-family: 'Playfair Display', serif;
